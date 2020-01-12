@@ -16,8 +16,20 @@
       q-separator(inset)
       .row.q-gutter-md.q-mt-xs
         q-card.photo-card(v-for="item in data.getAlbum.photos.items" :key="item.id")
-          amplify-s3-image(:imagePath="item.file.key")
-          q-card-section.q-pt-none By {{ item.owner }} at {{ formattedHour(item.createdAt) }} on {{ formattedDate(item.createdAt) }}
+          q-img(:src="imgSrc[item.id]" :ratio="16/9" spinner-color="white" style="height: 150px")
+            .absolute-bottom.text-left By {{ item.owner }} at {{ formattedHour(item.createdAt) }} on {{ formattedDate(item.createdAt) }}
+            q-btn.absolute-top-right.q-ma-xs(fab-mini dense icon="help_outline" color="warning" text-color="black" size="sm" @click="getEntities(item.file.key)")
+      q-dialog(v-model="showEntities" @before-show="entities = null")
+        q-card(style="width:100%;max-width:650px")
+          q-card-section.row.items-center.q-pa-none.q-ma-none
+            q-space
+            q-btn(icon="close" flat round dense v-close-popup)
+          q-card-section.q-py-none
+            .text-h6 Entities
+          q-card-section.q-pt-none(v-if="entities")
+            pre {{ entities }}
+          q-card-section.q-py-none.text-center(v-else)
+            q-spinner(size="3em")
       q-dialog(ref="addPhoto" v-model="addPhoto" persistent)
         q-card
           q-card-section.row.items-center.q-pb-none
@@ -45,6 +57,10 @@ export default {
       loading: false,
       watchedSubscription: null,
       translation: null,
+      imgSrc: {},
+      entities: null,
+      showEntities: false,
+      processingUpload: null
     }
   },
   beforeDestroy () {
@@ -98,6 +114,10 @@ export default {
       return prevData.data
     },
     fileUploaded (path) {
+      if (this.processingUpload === path) {
+        return
+      }
+      this.processingUpload = path
       const bucket = this.$Amplify.Storage._config.AWSS3.bucket
       const region = this.$Amplify.Storage._config.AWSS3.region
       const input = {
@@ -128,11 +148,22 @@ export default {
           this.translation = res.data.translateName
         })
     },
+    _getSrc (id, key) {
+      this.$Amplify.Storage.get(key)
+        .then(res => {
+          let newItem = {}
+          newItem[id] = res
+          this.imgSrc = { ...this.imgSrc, ...newItem }
+        }).catch(err => console.log(err))
+    },
     _fetchData () {
       this.loading = true
       this.data = {}
       this.$Amplify.API.graphql({ query: getAlbum, variables: { id: this.$route.params.id }, authMode: this.authMode })
         .then(res => {
+          res.data.getAlbum.photos.items.forEach(p => {
+            this._getSrc(p.id, p.file.key)
+          })
           this.data = res.data
         })
         .catch(err => {
@@ -163,8 +194,24 @@ export default {
       if (this.watchedSubscription) {
         this.watchedSubscription.unsubscribe()
       }
+    },
+    getEntities (key) {
+      this.showEntities = true
+      this.$Amplify.Predictions.identify({
+        entities: {
+          source: {
+            key
+          },
+          celebrityDetection: false
+        }
+      })
+        .then((response) => {
+          this.entities = response.entities
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
-
   }
 }
 </script>
