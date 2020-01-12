@@ -1,7 +1,7 @@
 type Album @model(subscriptions: { level: public })
 @auth(rules:[
   { allow: owner },
-  { allow: private },
+  { allow: private, operations: [read] },
   { allow: public, provider: iam, operations: [read] }
 ])
 @key(name: "byOwner", fields:["owner", "createdAt"], queryField: "ListAlbumsByOwner")
@@ -19,7 +19,7 @@ type Album @model(subscriptions: { level: public })
 type Photo @model(subscriptions: { level: public })
 @auth(rules:[
   { allow: owner },
-  { allow: private },
+  { allow: private, operations: [read] },
   { allow: public, provider: iam, operations: [read] }
 ])
 {
@@ -36,7 +36,7 @@ type Photo @model(subscriptions: { level: public })
 type Comment @model(subscriptions: { level: public })
 @auth(rules:[
   { allow: owner },
-  { allow: private },
+  { allow: private, operations: [create, read] },
   { allow: public, provider: iam, operations: [create, read]}
 ])
 {
