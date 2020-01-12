@@ -40,6 +40,7 @@ export default {
       if (this.name) {
         name = this.name.trim()
       }
+      this.$Amplify.API.configure({ 'aws_appsync_authenticationType': 'AMAZON_COGNITO_USER_POOLS' })
       return this.$Amplify.graphqlOperation(createAlbum, { input: { name: name, siteId: 1 } })
     }
   },

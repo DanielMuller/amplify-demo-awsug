@@ -12,10 +12,26 @@ export const onCreateAlbum = `subscription OnCreateAlbum {
     photos {
       items {
         id
+        file {
+          bucket
+          key
+          region
+        }
         exif
         owner
         createdAt
         updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
       }
       nextToken
     }
@@ -33,10 +49,26 @@ export const onUpdateAlbum = `subscription OnUpdateAlbum {
     photos {
       items {
         id
+        file {
+          bucket
+          key
+          region
+        }
         exif
         owner
         createdAt
         updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
       }
       nextToken
     }
@@ -54,10 +86,26 @@ export const onDeleteAlbum = `subscription OnDeleteAlbum {
     photos {
       items {
         id
+        file {
+          bucket
+          key
+          region
+        }
         exif
         owner
         createdAt
         updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
       }
       nextToken
     }
@@ -84,6 +132,13 @@ export const onCreatePhoto = `subscription OnCreatePhoto {
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -94,6 +149,13 @@ export const onCreatePhoto = `subscription OnCreatePhoto {
         content
         createdAt
         updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -120,6 +182,13 @@ export const onUpdatePhoto = `subscription OnUpdatePhoto {
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -130,6 +199,13 @@ export const onUpdatePhoto = `subscription OnUpdatePhoto {
         content
         createdAt
         updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -156,6 +232,13 @@ export const onDeletePhoto = `subscription OnDeletePhoto {
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -166,6 +249,13 @@ export const onDeletePhoto = `subscription OnDeletePhoto {
         content
         createdAt
         updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -197,8 +287,18 @@ export const onCreateComment = `subscription OnCreateComment {
         owner
         createdAt
         updatedAt
+        photos {
+          nextToken
+        }
       }
       comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -230,8 +330,18 @@ export const onUpdateComment = `subscription OnUpdateComment {
         owner
         createdAt
         updatedAt
+        photos {
+          nextToken
+        }
       }
       comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -263,8 +373,18 @@ export const onDeleteComment = `subscription OnDeleteComment {
         owner
         createdAt
         updatedAt
+        photos {
+          nextToken
+        }
       }
       comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }

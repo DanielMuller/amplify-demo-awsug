@@ -15,6 +15,13 @@ export const listAlbums = `query ListAlbums(
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -33,10 +40,26 @@ export const getAlbum = `query GetAlbum($id: ID!) {
     photos {
       items {
         id
+        file {
+          bucket
+          key
+          region
+        }
         exif
         owner
         createdAt
         updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
       }
       nextToken
     }
@@ -67,6 +90,13 @@ export const listAlbumsByOwner = `query ListAlbumsByOwner(
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -98,6 +128,13 @@ export const listAlbumsBySiteId = `query ListAlbumsBySiteId(
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -129,8 +166,18 @@ export const listPhotos = `query ListPhotos(
         owner
         createdAt
         updatedAt
+        photos {
+          nextToken
+        }
       }
       comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -158,6 +205,13 @@ export const getPhoto = `query GetPhoto($id: ID!) {
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -168,6 +222,13 @@ export const getPhoto = `query GetPhoto($id: ID!) {
         content
         createdAt
         updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -199,8 +260,18 @@ export const getComment = `query GetComment($id: ID!) {
         owner
         createdAt
         updatedAt
+        photos {
+          nextToken
+        }
       }
       comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -221,10 +292,26 @@ export const listComments = `query ListComments(
       updatedAt
       photo {
         id
+        file {
+          bucket
+          key
+          region
+        }
         exif
         owner
         createdAt
         updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
       }
     }
     nextToken

@@ -15,10 +15,26 @@ export const createAlbum = `mutation CreateAlbum(
     photos {
       items {
         id
+        file {
+          bucket
+          key
+          region
+        }
         exif
         owner
         createdAt
         updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
       }
       nextToken
     }
@@ -39,10 +55,26 @@ export const updateAlbum = `mutation UpdateAlbum(
     photos {
       items {
         id
+        file {
+          bucket
+          key
+          region
+        }
         exif
         owner
         createdAt
         updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
       }
       nextToken
     }
@@ -63,10 +95,26 @@ export const deleteAlbum = `mutation DeleteAlbum(
     photos {
       items {
         id
+        file {
+          bucket
+          key
+          region
+        }
         exif
         owner
         createdAt
         updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+        comments {
+          nextToken
+        }
       }
       nextToken
     }
@@ -96,6 +144,13 @@ export const createPhoto = `mutation CreatePhoto(
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -106,6 +161,13 @@ export const createPhoto = `mutation CreatePhoto(
         content
         createdAt
         updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -135,6 +197,13 @@ export const updatePhoto = `mutation UpdatePhoto(
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -145,6 +214,13 @@ export const updatePhoto = `mutation UpdatePhoto(
         content
         createdAt
         updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -174,6 +250,13 @@ export const deletePhoto = `mutation DeletePhoto(
       createdAt
       updatedAt
       photos {
+        items {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -184,6 +267,13 @@ export const deletePhoto = `mutation DeletePhoto(
         content
         createdAt
         updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
       }
       nextToken
     }
@@ -218,8 +308,18 @@ export const createComment = `mutation CreateComment(
         owner
         createdAt
         updatedAt
+        photos {
+          nextToken
+        }
       }
       comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -254,8 +354,18 @@ export const updateComment = `mutation UpdateComment(
         owner
         createdAt
         updatedAt
+        photos {
+          nextToken
+        }
       }
       comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
@@ -290,8 +400,18 @@ export const deleteComment = `mutation DeleteComment(
         owner
         createdAt
         updatedAt
+        photos {
+          nextToken
+        }
       }
       comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
     }
