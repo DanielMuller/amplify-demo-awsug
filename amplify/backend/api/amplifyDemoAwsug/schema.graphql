@@ -1,0 +1,51 @@
+type Album @model(subscriptions: { level: public })
+@auth(rules:[
+  { allow: owner },
+  { allow: public, provider: iam, operations: [read] }
+])
+@key(name: "byOwner", fields:["owner", "createdAt"], queryField: "ListAlbumsByOwner")
+@key(name: "bySiteId", fields:["siteId", "createdAt"], queryField: "ListAlbumsBySiteId")
+{
+  id: ID!
+  name: String!
+  siteId: Int!
+  photos: [Photo] @connection(name: "AlbumPhotos", sortField: "createdAt", limit:500)
+  owner: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Photo @model(subscriptions: { level: public })
+@auth(rules:[
+  { allow: owner },
+  { allow: public, provider: iam, operations: [read] }
+])
+{
+  id: ID!
+  album: Album! @connection(name: "AlbumPhotos")
+  file: S3Object
+  exif: AWSJSON
+  owner: String
+  comments: [Comment] @connection(name: "PhotoComments", sortField: "createdAt", limit: 500)
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Comment @model(subscriptions: { level: public })
+@auth(rules:[
+  { allow: public, provider:iam }
+])
+{
+  id: ID!
+  author: String
+  content: String
+  photo: Photo! @connection(name: "PhotoComments")
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type S3Object {
+  bucket: String!
+  key: String!
+  region: String!
+}
