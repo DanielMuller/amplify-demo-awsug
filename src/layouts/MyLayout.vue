@@ -14,8 +14,10 @@
             img(src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg")
           q-toolbar-title(shrink v-if="$q.screen.gt.xs") Amplify Demo
         q-space
-        q-btn(v-if="!signedIn" label="Sign In" no-caps color="warning" text-color="black" icon="lock" :to="{name: 'auth'}")
-        q-btn(v-if="signedIn" label="Sign Out" no-caps color="warning" text-color="black" icon="exit_to_app" @click="signOut")
+        .q-gutter-sm
+          q-btn(v-if="signedIn" label="Add Album" no-caps color="warning" text-color="black" icon="add_photo_alternate" :to="{'name': 'addAlbum'}")
+          q-btn(v-if="!signedIn" label="Sign In" no-caps color="warning" text-color="black" icon="lock" :to="{name: 'auth'}")
+          q-btn(v-if="signedIn" label="Sign Out" no-caps color="warning" text-color="black" icon="exit_to_app" @click="signOut")
     q-page-container
       router-view
 </template>

@@ -13,6 +13,14 @@ const routes = [
         path: '/auth',
         name: 'auth',
         component: () => import('pages/Auth.vue')
+      },
+      {
+        path: '/addAlbum',
+        name: 'addAlbum',
+        component: () => import('pages/AddAlbum.vue'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   }
