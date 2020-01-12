@@ -1,5 +1,6 @@
 export default function () {
   return {
-    signedIn: false
+    signedIn: false,
+    identityId: null
   }
 }

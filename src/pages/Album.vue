@@ -1,35 +1,28 @@
 <template lang="pug">
   q-page(padding)
-    amplify-connect(
-      v-if="id && signedIn"
-      :query="getAlbumQuery"
-      :subscription="createPhotoSubscription"
-      :onSubscriptionMsg="onCreatePhoto"
-    )
-      template(slot-scope="{loading, data, errors}")
-        div(v-if="loading")
-          q.spinner(size="3em")
-        div(v-else-if="errors.length > 0")
-          q-banner.bg-negative Errors:
-            ul
-              li(v-for="error in errors") {{ error.message }}
-        div(v-else-if="data")
-          q-page-sticky(v-if="username === data.getAlbum.owner" position="top-right" :offset="[18, 18]")
-            q-btn(round icon="add_a_photo" color="warning" @click="addPhoto = true")
-          .text-h5 {{ data.getAlbum.name }}
-          .text-caption By {{ data.getAlbum.owner }} at {{ formattedHour(data.getAlbum.createdAt) }} on {{ formattedDate(data.getAlbum.createdAt) }}
-          q-separator(inset)
-          .row.q-gutter-md.q-mt-xs
-            q-card.photo-card(v-for="item in data.getAlbum.photos.items" :key="item.id")
-              amplify-s3-image(:imagePath="item.file.key")
-              q-card-section.q-pt-none By {{ item.owner }} at {{ formattedHour(item.createdAt) }} on {{ formattedDate(item.createdAt) }}
-          q-dialog(ref="addPhoto" v-model="addPhoto" persistent)
-            q-card
-              q-card-section.row.items-center.q-pb-none
-                q-space
-                q-btn(icon="close" flat round dense v-close-popup)
-              q-card-section
-                amplify-photo-picker(:photoPickerConfig="photoPickerConfig")
+    div(v-if="loading")
+      q.spinner(size="3em")
+    div(v-else-if="errors.length > 0")
+      q-banner.bg-negative Errors:
+        ul
+          li(v-for="error in errors") {{ error.message }}
+    div(v-else-if="data")
+      q-page-sticky(v-if="username === data.getAlbum.owner" position="top-right" :offset="[18, 18]")
+        q-btn(round icon="add_a_photo" color="warning" @click="addPhoto = true")
+      .text-h5 {{ data.getAlbum.name }}
+      .text-caption By {{ data.getAlbum.owner }} at {{ formattedHour(data.getAlbum.createdAt) }} on {{ formattedDate(data.getAlbum.createdAt) }}
+      q-separator(inset)
+      .row.q-gutter-md.q-mt-xs
+        q-card.photo-card(v-for="item in data.getAlbum.photos.items" :key="item.id")
+          amplify-s3-image(:imagePath="item.file.key")
+          q-card-section.q-pt-none By {{ item.owner }} at {{ formattedHour(item.createdAt) }} on {{ formattedDate(item.createdAt) }}
+      q-dialog(ref="addPhoto" v-model="addPhoto" persistent)
+        q-card
+          q-card-section.row.items-center.q-pb-none
+            q-space
+            q-btn(icon="close" flat round dense v-close-popup)
+          q-card-section
+            amplify-photo-picker(:photoPickerConfig="photoPickerConfig")
 </template>
 
 <script>
@@ -44,11 +37,20 @@ export default {
     return {
       id: null,
       username: null,
-      addPhoto: false
+      addPhoto: false,
+      data: null,
+      errors: [],
+      loading: false,
+      watchedSubscription: null
     }
   },
+  beforeDestroy () {
+    this._unsubscribe()
+  },
   created () {
+    this._subscribe()
     this.id = this.$route.params.id
+    this._fetchData()
     this.username = null
     this.$Amplify.Auth.currentAuthenticatedUser()
       .then(user => {
@@ -58,17 +60,15 @@ export default {
   },
   beforeRouteUpdate (to, from, next) {
     this.id = to.params.id
+    this._fetchData()
     next()
   },
   computed: {
     signedIn () {
       return this.$store.state.user.signedIn
     },
-    getAlbumQuery () {
-      return this.$Amplify.graphqlOperation(getAlbum, { id: this.$route.params.id })
-    },
-    createPhotoSubscription () {
-      return this.signedIn ? this.$Amplify.graphqlOperation(onCreatePhoto) : null
+    authMode () {
+      return this.signedIn ? 'AMAZON_COGNITO_USER_POOLS' : 'AWS_IAM'
     },
     photoPickerConfig () {
       return {
@@ -76,7 +76,11 @@ export default {
         accept: 'image/*'
       }
     }
-
+  },
+  watch: {
+    signedIn: function (newData, oldData) {
+      this._subscribe()
+    }
   },
   methods: {
     formattedDate (dateStr) {
@@ -105,7 +109,44 @@ export default {
       this.$Amplify.API.graphql(query).then(res => {
         this.$refs['addPhoto'].hide()
       })
+    },
+    _fetchData () {
+      this.loading = true
+      this.data = {}
+      this.$Amplify.API.graphql({ query: getAlbum, variables: { id: this.$route.params.id }, authMode: this.authMode })
+        .then(res => {
+          this.data = res.data
+        })
+        .catch(err => {
+          this.errors = err.errors
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    },
+    _subscribe () {
+      this._unsubscribe()
+      if (this.signedIn) {
+        const observable = this.$Amplify.API.graphql({ query: onCreatePhoto })
+        this.watchedSubscription = observable.subscribe({
+          next: ({ value: { data } }) => {
+            const prevData = {
+              data: this.data,
+              errors: this.errors,
+              loading: this.loading
+            }
+            this.data = this.onCreatePhoto(prevData, data)
+          },
+          error: (error) => console.log(error)
+        })
+      }
+    },
+    _unsubscribe () {
+      if (this.watchedSubscription) {
+        this.watchedSubscription.unsubscribe()
+      }
     }
+
   }
 }
 </script>

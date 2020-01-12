@@ -48,6 +48,14 @@ export default {
       set (val) {
         this.$store.commit('user/signedIn', val)
       }
+    },
+    identityId: {
+      get () {
+        return this.$store.state.user.identityId
+      },
+      set (val) {
+        this.$store.commit('user/identityId', val)
+      }
     }
   },
   created () {
@@ -62,13 +70,15 @@ export default {
     })
   },
   beforeCreate () {
-    this.$Amplify.Auth.currentAuthenticatedUser()
-      .then(user => {
-        this.signedIn = true
+    this.$Amplify.Auth.currentCredentials()
+      .then(creds => {
+        this.signedIn = creds.authenticated
+        this.identityId = creds.identityId
       })
       .catch(err => {
         console.log('no user', err)
         this.signedIn = false
+        this.identityId = null
       })
   }
 }

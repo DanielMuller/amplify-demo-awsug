@@ -4,3 +4,7 @@ export const signedIn = (state, val) => {
   }
   state.signedIn = val
 }
+
+export const identityId = (state, val) => {
+  state.identityId = val
+}
