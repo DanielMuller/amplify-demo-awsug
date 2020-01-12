@@ -1,13 +1,14 @@
 <template lang="pug">
   q-page(padding)
     amplify-connect(
+      v-if="signedIn"
       :query="listAlbumsQuery"
       :subscription="createAlbumSubscription"
       :onSubscriptionMsg="onCreateAlbum"
     )
       template(slot-scope="{loading, data, errors}")
         div(v-if="loading")
-          q.spinner(size="3em")
+          q-spinner(size="3em")
         div(v-else-if="errors.length > 0")
           q-banner.bg-negative Errors:
             ul
@@ -40,7 +41,6 @@ export default {
       return this.$store.state.user.signedIn
     },
     listAlbumsQuery () {
-      this.$Amplify.API.configure({ 'aws_appsync_authenticationType': 'AWS_IAM' })
       return this.$Amplify.graphqlOperation(listAlbumsBySiteId, { siteId: 1, sortDirection: 'DESC', limit: 500 })
     },
     createAlbumSubscription () {

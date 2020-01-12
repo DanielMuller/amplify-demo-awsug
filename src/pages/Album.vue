@@ -1,7 +1,7 @@
 <template lang="pug">
   q-page(padding)
     amplify-connect(
-      v-if="id"
+      v-if="id && signedIn"
       :query="getAlbumQuery"
       :subscription="createPhotoSubscription"
       :onSubscriptionMsg="onCreatePhoto"
@@ -56,7 +56,6 @@ export default {
       return this.$store.state.user.signedIn
     },
     getAlbumQuery () {
-      this.$Amplify.API.configure({ 'aws_appsync_authenticationType': 'AWS_IAM' })
       return this.$Amplify.graphqlOperation(getAlbum, { id: this.$route.params.id })
     },
     createPhotoSubscription () {

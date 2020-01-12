@@ -22,6 +22,9 @@ export const createAlbum = `mutation CreateAlbum(
         }
         exif
         owner
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         album {
@@ -31,9 +34,6 @@ export const createAlbum = `mutation CreateAlbum(
           owner
           createdAt
           updatedAt
-        }
-        comments {
-          nextToken
         }
       }
       nextToken
@@ -62,6 +62,9 @@ export const updateAlbum = `mutation UpdateAlbum(
         }
         exif
         owner
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         album {
@@ -71,9 +74,6 @@ export const updateAlbum = `mutation UpdateAlbum(
           owner
           createdAt
           updatedAt
-        }
-        comments {
-          nextToken
         }
       }
       nextToken
@@ -102,6 +102,9 @@ export const deleteAlbum = `mutation DeleteAlbum(
         }
         exif
         owner
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         album {
@@ -111,9 +114,6 @@ export const deleteAlbum = `mutation DeleteAlbum(
           owner
           createdAt
           updatedAt
-        }
-        comments {
-          nextToken
         }
       }
       nextToken
@@ -134,6 +134,23 @@ export const createPhoto = `mutation CreatePhoto(
     }
     exif
     owner
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
     createdAt
     updatedAt
     album {
@@ -153,23 +170,6 @@ export const createPhoto = `mutation CreatePhoto(
         }
         nextToken
       }
-    }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
     }
   }
 }
@@ -187,6 +187,23 @@ export const updatePhoto = `mutation UpdatePhoto(
     }
     exif
     owner
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
     createdAt
     updatedAt
     album {
@@ -206,23 +223,6 @@ export const updatePhoto = `mutation UpdatePhoto(
         }
         nextToken
       }
-    }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
     }
   }
 }
@@ -240,6 +240,23 @@ export const deletePhoto = `mutation DeletePhoto(
     }
     exif
     owner
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
     createdAt
     updatedAt
     album {
@@ -259,23 +276,6 @@ export const deletePhoto = `mutation DeletePhoto(
         }
         nextToken
       }
-    }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
     }
   }
 }
@@ -299,6 +299,16 @@ export const createComment = `mutation CreateComment(
       }
       exif
       owner
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       album {
@@ -311,16 +321,6 @@ export const createComment = `mutation CreateComment(
         photos {
           nextToken
         }
-      }
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
     }
   }
@@ -345,6 +345,16 @@ export const updateComment = `mutation UpdateComment(
       }
       exif
       owner
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       album {
@@ -357,16 +367,6 @@ export const updateComment = `mutation UpdateComment(
         photos {
           nextToken
         }
-      }
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
     }
   }
@@ -391,6 +391,16 @@ export const deleteComment = `mutation DeleteComment(
       }
       exif
       owner
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       album {
@@ -403,16 +413,6 @@ export const deleteComment = `mutation DeleteComment(
         photos {
           nextToken
         }
-      }
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
     }
   }

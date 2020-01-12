@@ -1,6 +1,89 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getComment = `query GetComment($id: ID!) {
+  getComment(id: $id) {
+    id
+    author
+    content
+    createdAt
+    updatedAt
+    photo {
+      id
+      file {
+        bucket
+        key
+        region
+      }
+      exif
+      owner
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      album {
+        id
+        name
+        siteId
+        owner
+        createdAt
+        updatedAt
+        photos {
+          nextToken
+        }
+      }
+    }
+  }
+}
+`;
+export const listComments = `query ListComments(
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      author
+      content
+      createdAt
+      updatedAt
+      photo {
+        id
+        file {
+          bucket
+          key
+          region
+        }
+        exif
+        owner
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+    }
+    nextToken
+  }
+}
+`;
 export const listAlbums = `query ListAlbums(
   $filter: ModelAlbumFilterInput
   $limit: Int
@@ -47,6 +130,9 @@ export const getAlbum = `query GetAlbum($id: ID!) {
         }
         exif
         owner
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         album {
@@ -56,9 +142,6 @@ export const getAlbum = `query GetAlbum($id: ID!) {
           owner
           createdAt
           updatedAt
-        }
-        comments {
-          nextToken
         }
       }
       nextToken
@@ -157,6 +240,16 @@ export const listPhotos = `query ListPhotos(
       }
       exif
       owner
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       album {
@@ -169,16 +262,6 @@ export const listPhotos = `query ListPhotos(
         photos {
           nextToken
         }
-      }
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
     }
     nextToken
@@ -195,6 +278,23 @@ export const getPhoto = `query GetPhoto($id: ID!) {
     }
     exif
     owner
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
     createdAt
     updatedAt
     album {
@@ -215,106 +315,6 @@ export const getPhoto = `query GetPhoto($id: ID!) {
         nextToken
       }
     }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
-  }
-}
-`;
-export const getComment = `query GetComment($id: ID!) {
-  getComment(id: $id) {
-    id
-    author
-    content
-    createdAt
-    updatedAt
-    photo {
-      id
-      file {
-        bucket
-        key
-        region
-      }
-      exif
-      owner
-      createdAt
-      updatedAt
-      album {
-        id
-        name
-        siteId
-        owner
-        createdAt
-        updatedAt
-        photos {
-          nextToken
-        }
-      }
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-    }
-  }
-}
-`;
-export const listComments = `query ListComments(
-  $filter: ModelCommentFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      author
-      content
-      createdAt
-      updatedAt
-      photo {
-        id
-        file {
-          bucket
-          key
-          region
-        }
-        exif
-        owner
-        createdAt
-        updatedAt
-        album {
-          id
-          name
-          siteId
-          owner
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-      }
-    }
-    nextToken
   }
 }
 `;

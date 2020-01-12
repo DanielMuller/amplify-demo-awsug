@@ -19,6 +19,9 @@ export const onCreateAlbum = `subscription OnCreateAlbum {
         }
         exif
         owner
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         album {
@@ -28,9 +31,6 @@ export const onCreateAlbum = `subscription OnCreateAlbum {
           owner
           createdAt
           updatedAt
-        }
-        comments {
-          nextToken
         }
       }
       nextToken
@@ -56,6 +56,9 @@ export const onUpdateAlbum = `subscription OnUpdateAlbum {
         }
         exif
         owner
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         album {
@@ -65,9 +68,6 @@ export const onUpdateAlbum = `subscription OnUpdateAlbum {
           owner
           createdAt
           updatedAt
-        }
-        comments {
-          nextToken
         }
       }
       nextToken
@@ -93,6 +93,9 @@ export const onDeleteAlbum = `subscription OnDeleteAlbum {
         }
         exif
         owner
+        comments {
+          nextToken
+        }
         createdAt
         updatedAt
         album {
@@ -102,9 +105,6 @@ export const onDeleteAlbum = `subscription OnDeleteAlbum {
           owner
           createdAt
           updatedAt
-        }
-        comments {
-          nextToken
         }
       }
       nextToken
@@ -122,6 +122,23 @@ export const onCreatePhoto = `subscription OnCreatePhoto {
     }
     exif
     owner
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
     createdAt
     updatedAt
     album {
@@ -141,23 +158,6 @@ export const onCreatePhoto = `subscription OnCreatePhoto {
         }
         nextToken
       }
-    }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
     }
   }
 }
@@ -172,6 +172,23 @@ export const onUpdatePhoto = `subscription OnUpdatePhoto {
     }
     exif
     owner
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
     createdAt
     updatedAt
     album {
@@ -191,23 +208,6 @@ export const onUpdatePhoto = `subscription OnUpdatePhoto {
         }
         nextToken
       }
-    }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
     }
   }
 }
@@ -222,6 +222,23 @@ export const onDeletePhoto = `subscription OnDeletePhoto {
     }
     exif
     owner
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
     createdAt
     updatedAt
     album {
@@ -241,23 +258,6 @@ export const onDeletePhoto = `subscription OnDeletePhoto {
         }
         nextToken
       }
-    }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
     }
   }
 }
@@ -278,6 +278,16 @@ export const onCreateComment = `subscription OnCreateComment {
       }
       exif
       owner
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       album {
@@ -290,16 +300,6 @@ export const onCreateComment = `subscription OnCreateComment {
         photos {
           nextToken
         }
-      }
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
     }
   }
@@ -321,6 +321,16 @@ export const onUpdateComment = `subscription OnUpdateComment {
       }
       exif
       owner
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       album {
@@ -333,16 +343,6 @@ export const onUpdateComment = `subscription OnUpdateComment {
         photos {
           nextToken
         }
-      }
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
     }
   }
@@ -364,6 +364,16 @@ export const onDeleteComment = `subscription OnDeleteComment {
       }
       exif
       owner
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       album {
@@ -376,16 +386,6 @@ export const onDeleteComment = `subscription OnDeleteComment {
         photos {
           nextToken
         }
-      }
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
     }
   }
