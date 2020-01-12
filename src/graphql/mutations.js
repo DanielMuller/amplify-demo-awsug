@@ -22,9 +22,6 @@ export const createAlbum = `mutation CreateAlbum(
         }
         exif
         owner
-        comments {
-          nextToken
-        }
         createdAt
         updatedAt
         album {
@@ -34,6 +31,9 @@ export const createAlbum = `mutation CreateAlbum(
           owner
           createdAt
           updatedAt
+        }
+        comments {
+          nextToken
         }
       }
       nextToken
@@ -62,9 +62,6 @@ export const updateAlbum = `mutation UpdateAlbum(
         }
         exif
         owner
-        comments {
-          nextToken
-        }
         createdAt
         updatedAt
         album {
@@ -74,6 +71,9 @@ export const updateAlbum = `mutation UpdateAlbum(
           owner
           createdAt
           updatedAt
+        }
+        comments {
+          nextToken
         }
       }
       nextToken
@@ -102,9 +102,6 @@ export const deleteAlbum = `mutation DeleteAlbum(
         }
         exif
         owner
-        comments {
-          nextToken
-        }
         createdAt
         updatedAt
         album {
@@ -114,6 +111,9 @@ export const deleteAlbum = `mutation DeleteAlbum(
           owner
           createdAt
           updatedAt
+        }
+        comments {
+          nextToken
         }
       }
       nextToken
@@ -134,23 +134,6 @@ export const createPhoto = `mutation CreatePhoto(
     }
     exif
     owner
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
     createdAt
     updatedAt
     album {
@@ -170,6 +153,23 @@ export const createPhoto = `mutation CreatePhoto(
         }
         nextToken
       }
+    }
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
     }
   }
 }
@@ -187,23 +187,6 @@ export const updatePhoto = `mutation UpdatePhoto(
     }
     exif
     owner
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
     createdAt
     updatedAt
     album {
@@ -224,22 +207,6 @@ export const updatePhoto = `mutation UpdatePhoto(
         nextToken
       }
     }
-  }
-}
-`;
-export const deletePhoto = `mutation DeletePhoto(
-  $input: DeletePhotoInput!
-  $condition: ModelPhotoConditionInput
-) {
-  deletePhoto(input: $input, condition: $condition) {
-    id
-    file {
-      bucket
-      key
-      region
-    }
-    exif
-    owner
     comments {
       items {
         id
@@ -257,6 +224,22 @@ export const deletePhoto = `mutation DeletePhoto(
       }
       nextToken
     }
+  }
+}
+`;
+export const deletePhoto = `mutation DeletePhoto(
+  $input: DeletePhotoInput!
+  $condition: ModelPhotoConditionInput
+) {
+  deletePhoto(input: $input, condition: $condition) {
+    id
+    file {
+      bucket
+      key
+      region
+    }
+    exif
+    owner
     createdAt
     updatedAt
     album {
@@ -271,6 +254,115 @@ export const deletePhoto = `mutation DeletePhoto(
           id
           exif
           owner
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+    comments {
+      items {
+        id
+        author
+        content
+        createdAt
+        updatedAt
+        photo {
+          id
+          exif
+          owner
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+}
+`;
+export const updateComment = `mutation UpdateComment(
+  $input: UpdateCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  updateComment(input: $input, condition: $condition) {
+    id
+    author
+    content
+    createdAt
+    updatedAt
+    photo {
+      id
+      file {
+        bucket
+        key
+        region
+      }
+      exif
+      owner
+      createdAt
+      updatedAt
+      album {
+        id
+        name
+        siteId
+        owner
+        createdAt
+        updatedAt
+        photos {
+          nextToken
+        }
+      }
+      comments {
+        items {
+          id
+          author
+          content
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const deleteComment = `mutation DeleteComment(
+  $input: DeleteCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  deleteComment(input: $input, condition: $condition) {
+    id
+    author
+    content
+    createdAt
+    updatedAt
+    photo {
+      id
+      file {
+        bucket
+        key
+        region
+      }
+      exif
+      owner
+      createdAt
+      updatedAt
+      album {
+        id
+        name
+        siteId
+        owner
+        createdAt
+        updatedAt
+        photos {
+          nextToken
+        }
+      }
+      comments {
+        items {
+          id
+          author
+          content
           createdAt
           updatedAt
         }
@@ -299,16 +391,6 @@ export const createComment = `mutation CreateComment(
       }
       exif
       owner
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
       album {
@@ -322,29 +404,6 @@ export const createComment = `mutation CreateComment(
           nextToken
         }
       }
-    }
-  }
-}
-`;
-export const updateComment = `mutation UpdateComment(
-  $input: UpdateCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  updateComment(input: $input, condition: $condition) {
-    id
-    author
-    content
-    createdAt
-    updatedAt
-    photo {
-      id
-      file {
-        bucket
-        key
-        region
-      }
-      exif
-      owner
       comments {
         items {
           id
@@ -354,65 +413,6 @@ export const updateComment = `mutation UpdateComment(
           updatedAt
         }
         nextToken
-      }
-      createdAt
-      updatedAt
-      album {
-        id
-        name
-        siteId
-        owner
-        createdAt
-        updatedAt
-        photos {
-          nextToken
-        }
-      }
-    }
-  }
-}
-`;
-export const deleteComment = `mutation DeleteComment(
-  $input: DeleteCommentInput!
-  $condition: ModelCommentConditionInput
-) {
-  deleteComment(input: $input, condition: $condition) {
-    id
-    author
-    content
-    createdAt
-    updatedAt
-    photo {
-      id
-      file {
-        bucket
-        key
-        region
-      }
-      exif
-      owner
-      comments {
-        items {
-          id
-          author
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      album {
-        id
-        name
-        siteId
-        owner
-        createdAt
-        updatedAt
-        photos {
-          nextToken
-        }
       }
     }
   }

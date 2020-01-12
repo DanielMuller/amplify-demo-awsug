@@ -35,7 +35,9 @@ type Photo @model(subscriptions: { level: public })
 
 type Comment @model(subscriptions: { level: public })
 @auth(rules:[
-  { allow: private }
+  { allow: owner },
+  { allow: private },
+  { allow: public, provider: iam, operations: [create, read]}
 ])
 {
   id: ID!
@@ -46,7 +48,7 @@ type Comment @model(subscriptions: { level: public })
   updatedAt: AWSDateTime
 }
 
-type S3Object {
+type S3Object @aws_iam @aws_cognito_user_pools {
   bucket: String!
   key: String!
   region: String!
