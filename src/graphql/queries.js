@@ -1,6 +1,10 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const translateName = `query TranslateName($input: TranslateNameInput!) {
+  translateName(input: $input)
+}
+`;
 export const listAlbums = `query ListAlbums(
   $filter: ModelAlbumFilterInput
   $limit: Int

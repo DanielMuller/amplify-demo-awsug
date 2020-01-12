@@ -54,6 +54,11 @@ type S3Object @aws_iam @aws_cognito_user_pools {
   region: String!
 }
 
+type Query {
+  translateName: String @predictions(actions:[
+    translateText
+  ])
+}
 # Amplify doesn't generate subscriptions even when public
 # https://github.com/aws-amplify/amplify-cli/issues/2715#issuecomment-553550734
 # type Subscription {

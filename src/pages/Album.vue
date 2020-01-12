@@ -10,6 +10,8 @@
       q-page-sticky(v-if="username === data.getAlbum.owner" position="top-right" :offset="[18, 18]")
         q-btn(round icon="add_a_photo" color="warning" @click="addPhoto = true")
       .text-h5 {{ data.getAlbum.name }}
+        q-btn(v-if="!translation && signedIn" icon="translate" color="secondary" round no-caps size="xs" @click="translate(data.getAlbum.name)")
+        span.q-ml-sm(v-if="translation") ({{ translation }})
       .text-caption By {{ data.getAlbum.owner }} at {{ formattedHour(data.getAlbum.createdAt) }} on {{ formattedDate(data.getAlbum.createdAt) }}
       q-separator(inset)
       .row.q-gutter-md.q-mt-xs
@@ -26,7 +28,7 @@
 </template>
 
 <script>
-import { getAlbum } from 'src/graphql/queries'
+import { getAlbum, translateName } from 'src/graphql/queries'
 import { onCreatePhoto } from 'src/graphql/subscriptions'
 import { createPhoto } from 'src/graphql/mutations'
 import { date } from 'quasar'
@@ -41,7 +43,8 @@ export default {
       data: null,
       errors: [],
       loading: false,
-      watchedSubscription: null
+      watchedSubscription: null,
+      translation: null,
     }
   },
   beforeDestroy () {
@@ -109,6 +112,21 @@ export default {
       this.$Amplify.API.graphql(query).then(res => {
         this.$refs['addPhoto'].hide()
       })
+    },
+    translate (text) {
+      const params = {
+        input: {
+          translateText: {
+            sourceLanguage: 'en',
+            targetLanguage: 'zh',
+            text
+          }
+        }
+      }
+      this.$Amplify.API.graphql({ query: translateName, variables: params, authMode: this.authMode })
+        .then(res => {
+          this.translation = res.data.translateName
+        })
     },
     _fetchData () {
       this.loading = true
