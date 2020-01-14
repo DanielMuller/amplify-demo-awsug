@@ -110,6 +110,7 @@ export default {
     },
     onCreatePhoto (prevData, newData) {
       const newPhoto = newData.onCreatePhoto
+      this._getSrc(newPhoto.id, newPhoto.file.key)
       prevData.data.getAlbum.photos.items.unshift(newPhoto)
       return prevData.data
     },
