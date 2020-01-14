@@ -28,7 +28,7 @@
             .text-h6 Entities
           q-card-section.q-pt-none(v-if="entities")
             pre {{ entities }}
-          q-card-section.q-py-none.text-center(v-else)
+          q-card-section.text-center(v-else)
             q-spinner(size="3em")
       q-dialog(ref="addPhoto" v-model="addPhoto" persistent)
         q-card
@@ -59,12 +59,12 @@ export default {
       translation: null,
       imgSrc: {},
       entities: null,
-      showEntities: false,
-      processingUpload: null
+      showEntities: false
     }
   },
   beforeDestroy () {
     this._unsubscribe()
+    this.$AmplifyEventBus.$on('fileUpload', null)
   },
   created () {
     this._subscribe()
@@ -115,10 +115,6 @@ export default {
       return prevData.data
     },
     fileUploaded (path) {
-      if (this.processingUpload === path) {
-        return
-      }
-      this.processingUpload = path
       const bucket = this.$Amplify.Storage._config.AWSS3.bucket
       const region = this.$Amplify.Storage._config.AWSS3.region
       const input = {
@@ -132,6 +128,18 @@ export default {
       const query = this.$Amplify.graphqlOperation(createPhoto, { input })
       this.$Amplify.API.graphql(query).then(res => {
         this.$refs['addPhoto'].hide()
+      }).catch(err => { // eslint-disable-line handle-callback-err
+        console.log(err)
+        try {
+          this.$refs['addPhoto'].hide()
+          this.$q.notify({
+            message: 'Image name already exists. Upload cancelled',
+            color: 'negative',
+            position: 'center'
+          })
+        } catch (err) {
+          console.log(err)
+        }
       })
     },
     translate (text) {
@@ -160,7 +168,7 @@ export default {
     _fetchData () {
       this.loading = true
       this.data = {}
-      this.$Amplify.API.graphql({ query: getAlbum, variables: { id: this.$route.params.id }, authMode: this.authMode })
+      this.$Amplify.API.graphql({ query: getAlbum, variables: { id: this.$route.params.id, sortDirection: 'DESC' }, authMode: this.authMode })
         .then(res => {
           res.data.getAlbum.photos.items.forEach(p => {
             this._getSrc(p.id, p.file.key)

@@ -33,7 +33,7 @@ export const listAlbums = `query ListAlbums(
   }
 }
 `;
-export const getAlbum = `query GetAlbum($id: ID!) {
+export const getAlbum = `query GetAlbum($id: ID!, $sortDirection: ModelSortDirection) {
   getAlbum(id: $id) {
     id
     name
@@ -41,7 +41,7 @@ export const getAlbum = `query GetAlbum($id: ID!) {
     owner
     createdAt
     updatedAt
-    photos {
+    photos(sortDirection: $sortDirection) {
       items {
         id
         file {
