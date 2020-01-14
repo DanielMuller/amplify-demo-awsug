@@ -1,0 +1,22 @@
+version: 0.1
+backend:
+  phases:
+    build:
+      commands:
+        - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm i -g @quasar/cli
+        - npm ci
+    build:
+      commands:
+        - quasar build
+  artifacts:
+    baseDirectory: /dist/spa
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
