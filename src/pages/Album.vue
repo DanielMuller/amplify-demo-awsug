@@ -27,7 +27,9 @@
           q-card-section.q-py-none
             .text-h6 Labels
           q-card-section.q-pt-none(v-if="labels")
-            pre {{ labels }}
+            .q-gutter-md
+              q-btn(v-for="label in labels" :key="label.name" :label="label.name" no-caps color="secondary" text="white")
+                q-badge(:color="label.confidenceColor" floating) {{ label.confidenceValue }}
           q-card-section.text-center(v-else)
             q-spinner(size="3em")
       q-dialog(ref="addPhoto" v-model="addPhoto" persistent)
@@ -217,7 +219,15 @@ export default {
         }
       })
         .then((response) => {
-          this.labels = response.labels
+          const labels = response.labels.filter(el => el.metadata.confidence >= 75).map(el => {
+            return {
+              name: el.name,
+              confidence: el.metadata.confidence,
+              confidenceValue: parseFloat(Math.round(el.metadata.confidence * 10) / 10).toFixed(1) + '%',
+              confidenceColor: el.metadata.confidence > 90 ? 'green' : el.metadata.confidence > 80 ? 'orange' : 'red'
+            }
+          }).sort((a, b) => a.confidence > b.confidence)
+          this.labels = labels
         })
         .catch(err => {
           console.log(err)
