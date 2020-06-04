@@ -13,6 +13,7 @@
           q-avatar
             img(src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg")
           q-toolbar-title(shrink v-if="$q.screen.gt.xs") Amplify Demo
+          span(v-if="signedIn") ({{ username }})
         q-space
         .q-gutter-sm
           q-btn(v-if="signedIn" label="Add Album" no-caps color="warning" text-color="black" icon="add_photo_alternate" :to="{'name': 'addAlbum'}")
@@ -56,15 +57,29 @@ export default {
       set (val) {
         this.$store.commit('user/identityId', val)
       }
+    },
+    username: {
+      get () {
+        return this.$store.state.user.username
+      },
+      set (val) {
+        this.$store.commit('user/username', val)
+      }
     }
   },
   created () {
     this.$AmplifyEventBus.$on('authState', info => {
       if (info === 'signedIn') {
         this.signedIn = true
-        this.$router.push({ name: 'home' }).catch(err => {}) // eslint-disable-line handle-callback-err
+        return this.$Amplify.Auth.currentAuthenticatedUser()
+          .then(user => {
+            this.username = user.username
+            this.$router.push({ name: 'home' }).catch(err => {}) // eslint-disable-line handle-callback-err
+          })
+          .catch(err => {}) // eslint-disable-line handle-callback-err
       } else if (info === 'signedOut') {
         this.signedIn = false
+        this.username = null
         this.$router.push({ name: 'home' }).catch(err => {}) // eslint-disable-line handle-callback-err
       }
     })
@@ -74,11 +89,17 @@ export default {
       .then(creds => {
         this.signedIn = creds.authenticated
         this.identityId = creds.identityId
+        this.$Amplify.Auth.currentAuthenticatedUser()
+          .then(user => {
+            this.username = user.username
+          })
+          .catch(err => {}) // eslint-disable-line handle-callback-err
       })
       .catch(err => {
         console.log('no user', err)
         this.signedIn = false
         this.identityId = null
+        this.username = null
       })
   }
 }

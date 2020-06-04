@@ -8,3 +8,7 @@ export const signedIn = (state, val) => {
 export const identityId = (state, val) => {
   state.identityId = val
 }
+
+export const username = (state, val) => {
+  state.username = val
+}
