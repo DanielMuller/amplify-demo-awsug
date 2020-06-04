@@ -127,11 +127,13 @@ export default {
       }
       const query = this.$Amplify.graphqlOperation(createPhoto, { input })
       this.$Amplify.API.graphql(query).then(res => {
-        this.$refs['addPhoto'].hide()
+        if (this.$refs.addPhoto) {
+          this.$refs.addPhoto.hide()
+        }
       }).catch(err => { // eslint-disable-line handle-callback-err
         console.log(err)
         try {
-          this.$refs['addPhoto'].hide()
+          this.$refs.addPhoto.hide()
           this.$q.notify({
             message: 'Image name already exists. Upload cancelled',
             color: 'negative',
@@ -160,7 +162,7 @@ export default {
     _getSrc (id, key) {
       this.$Amplify.Storage.get(key)
         .then(res => {
-          let newItem = {}
+          const newItem = {}
           newItem[id] = res
           this.imgSrc = { ...this.imgSrc, ...newItem }
         }).catch(err => console.log(err))
