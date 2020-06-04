@@ -18,16 +18,16 @@
         q-card.photo-card(v-for="item in data.getAlbum.photos.items" :key="item.id")
           q-img(:src="imgSrc[item.id]" :ratio="16/9" spinner-color="white" style="height: 150px")
             .absolute-bottom.text-left By {{ item.owner }} at {{ formattedHour(item.createdAt) }} on {{ formattedDate(item.createdAt) }}
-            q-btn.absolute-top-right.q-ma-xs(fab-mini dense icon="help_outline" color="warning" text-color="black" size="sm" @click="getEntities(item.file.key)")
-      q-dialog(v-model="showEntities" @before-show="entities = null")
+            q-btn.absolute-top-right.q-ma-xs(fab-mini dense icon="help_outline" color="warning" text-color="black" size="sm" @click="getLabels(item.file.key)")
+      q-dialog(v-model="showLabels" @before-show="labels = null")
         q-card(style="width:100%;max-width:650px")
           q-card-section.row.items-center.q-pa-none.q-ma-none
             q-space
             q-btn(icon="close" flat round dense v-close-popup)
           q-card-section.q-py-none
-            .text-h6 Entities
-          q-card-section.q-pt-none(v-if="entities")
-            pre {{ entities }}
+            .text-h6 Labels
+          q-card-section.q-pt-none(v-if="labels")
+            pre {{ labels }}
           q-card-section.text-center(v-else)
             q-spinner(size="3em")
       q-dialog(ref="addPhoto" v-model="addPhoto" persistent)
@@ -58,8 +58,8 @@ export default {
       watchedSubscription: null,
       translation: null,
       imgSrc: {},
-      entities: null,
-      showEntities: false
+      labels: null,
+      showLabels: false
     }
   },
   beforeDestroy () {
@@ -206,18 +206,18 @@ export default {
         this.watchedSubscription.unsubscribe()
       }
     },
-    getEntities (key) {
-      this.showEntities = true
+    getLabels (key) {
+      this.showLabels = true
       this.$Amplify.Predictions.identify({
-        entities: {
+        labels: {
           source: {
             key
           },
-          celebrityDetection: false
+          type: 'LABELS'
         }
       })
         .then((response) => {
-          this.entities = response.entities
+          this.labels = response.labels
         })
         .catch(err => {
           console.log(err)
