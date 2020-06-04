@@ -64,7 +64,7 @@ export default {
   },
   beforeDestroy () {
     this._unsubscribe()
-    this.$AmplifyEventBus.$on('fileUpload', null)
+    this.$AmplifyEventBus.$off('fileUpload')
   },
   created () {
     this._subscribe()
