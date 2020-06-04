@@ -1,130 +1,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateAlbum = `subscription OnCreateAlbum {
-  onCreateAlbum {
-    id
-    name
-    siteId
-    owner
-    createdAt
-    updatedAt
-    photos {
-      items {
-        id
-        file {
-          bucket
-          key
-          region
-        }
-        exif
-        owner
-        createdAt
-        updatedAt
-        album {
-          id
-          name
-          siteId
-          owner
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-      }
-      nextToken
-    }
-  }
-}
-`;
-export const onUpdateAlbum = `subscription OnUpdateAlbum {
-  onUpdateAlbum {
-    id
-    name
-    siteId
-    owner
-    createdAt
-    updatedAt
-    photos {
-      items {
-        id
-        file {
-          bucket
-          key
-          region
-        }
-        exif
-        owner
-        createdAt
-        updatedAt
-        album {
-          id
-          name
-          siteId
-          owner
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-      }
-      nextToken
-    }
-  }
-}
-`;
-export const onDeleteAlbum = `subscription OnDeleteAlbum {
-  onDeleteAlbum {
-    id
-    name
-    siteId
-    owner
-    createdAt
-    updatedAt
-    photos {
-      items {
-        id
-        file {
-          bucket
-          key
-          region
-        }
-        exif
-        owner
-        createdAt
-        updatedAt
-        album {
-          id
-          name
-          siteId
-          owner
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-      }
-      nextToken
-    }
-  }
-}
-`;
-export const onCreatePhoto = `subscription OnCreatePhoto {
-  onCreatePhoto {
-    id
-    file {
-      bucket
-      key
-      region
-    }
-    exif
-    owner
-    createdAt
-    updatedAt
-    album {
+export const onCreateAlbum = /* GraphQL */ `
+  subscription OnCreateAlbum {
+    onCreateAlbum {
       id
       name
       siteId
@@ -134,47 +13,35 @@ export const onCreatePhoto = `subscription OnCreatePhoto {
       photos {
         items {
           id
+          file {
+            bucket
+            key
+            region
+          }
           exif
           owner
           createdAt
           updatedAt
+          album {
+            id
+            name
+            siteId
+            owner
+            createdAt
+            updatedAt
+          }
+          comments {
+            nextToken
+          }
         }
         nextToken
       }
     }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
   }
-}
 `;
-export const onUpdatePhoto = `subscription OnUpdatePhoto {
-  onUpdatePhoto {
-    id
-    file {
-      bucket
-      key
-      region
-    }
-    exif
-    owner
-    createdAt
-    updatedAt
-    album {
+export const onUpdateAlbum = /* GraphQL */ `
+  subscription OnUpdateAlbum {
+    onUpdateAlbum {
       id
       name
       siteId
@@ -184,47 +51,35 @@ export const onUpdatePhoto = `subscription OnUpdatePhoto {
       photos {
         items {
           id
+          file {
+            bucket
+            key
+            region
+          }
           exif
           owner
           createdAt
           updatedAt
+          album {
+            id
+            name
+            siteId
+            owner
+            createdAt
+            updatedAt
+          }
+          comments {
+            nextToken
+          }
         }
         nextToken
       }
     }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
   }
-}
 `;
-export const onDeletePhoto = `subscription OnDeletePhoto {
-  onDeletePhoto {
-    id
-    file {
-      bucket
-      key
-      region
-    }
-    exif
-    owner
-    createdAt
-    updatedAt
-    album {
+export const onDeleteAlbum = /* GraphQL */ `
+  subscription OnDeleteAlbum {
+    onDeleteAlbum {
       id
       name
       siteId
@@ -234,42 +89,35 @@ export const onDeletePhoto = `subscription OnDeletePhoto {
       photos {
         items {
           id
+          file {
+            bucket
+            key
+            region
+          }
           exif
           owner
           createdAt
           updatedAt
+          album {
+            id
+            name
+            siteId
+            owner
+            createdAt
+            updatedAt
+          }
+          comments {
+            nextToken
+          }
         }
         nextToken
       }
     }
-    comments {
-      items {
-        id
-        author
-        content
-        createdAt
-        updatedAt
-        photo {
-          id
-          exif
-          owner
-          createdAt
-          updatedAt
-        }
-      }
-      nextToken
-    }
   }
-}
 `;
-export const onCreateComment = `subscription OnCreateComment {
-  onCreateComment {
-    id
-    author
-    content
-    createdAt
-    updatedAt
-    photo {
+export const onCreatePhoto = /* GraphQL */ `
+  subscription OnCreatePhoto {
+    onCreatePhoto {
       id
       file {
         bucket
@@ -288,6 +136,13 @@ export const onCreateComment = `subscription OnCreateComment {
         createdAt
         updatedAt
         photos {
+          items {
+            id
+            exif
+            owner
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -298,21 +153,22 @@ export const onCreateComment = `subscription OnCreateComment {
           content
           createdAt
           updatedAt
+          photo {
+            id
+            exif
+            owner
+            createdAt
+            updatedAt
+          }
         }
         nextToken
       }
     }
   }
-}
 `;
-export const onUpdateComment = `subscription OnUpdateComment {
-  onUpdateComment {
-    id
-    author
-    content
-    createdAt
-    updatedAt
-    photo {
+export const onUpdatePhoto = /* GraphQL */ `
+  subscription OnUpdatePhoto {
+    onUpdatePhoto {
       id
       file {
         bucket
@@ -331,6 +187,13 @@ export const onUpdateComment = `subscription OnUpdateComment {
         createdAt
         updatedAt
         photos {
+          items {
+            id
+            exif
+            owner
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -341,21 +204,22 @@ export const onUpdateComment = `subscription OnUpdateComment {
           content
           createdAt
           updatedAt
+          photo {
+            id
+            exif
+            owner
+            createdAt
+            updatedAt
+          }
         }
         nextToken
       }
     }
   }
-}
 `;
-export const onDeleteComment = `subscription OnDeleteComment {
-  onDeleteComment {
-    id
-    author
-    content
-    createdAt
-    updatedAt
-    photo {
+export const onDeletePhoto = /* GraphQL */ `
+  subscription OnDeletePhoto {
+    onDeletePhoto {
       id
       file {
         bucket
@@ -374,6 +238,13 @@ export const onDeleteComment = `subscription OnDeleteComment {
         createdAt
         updatedAt
         photos {
+          items {
+            id
+            exif
+            owner
+            createdAt
+            updatedAt
+          }
           nextToken
         }
       }
@@ -384,10 +255,148 @@ export const onDeleteComment = `subscription OnDeleteComment {
           content
           createdAt
           updatedAt
+          photo {
+            id
+            exif
+            owner
+            createdAt
+            updatedAt
+          }
         }
         nextToken
       }
     }
   }
-}
+`;
+export const onCreateComment = /* GraphQL */ `
+  subscription OnCreateComment {
+    onCreateComment {
+      id
+      author
+      content
+      createdAt
+      updatedAt
+      photo {
+        id
+        file {
+          bucket
+          key
+          region
+        }
+        exif
+        owner
+        createdAt
+        updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+          photos {
+            nextToken
+          }
+        }
+        comments {
+          items {
+            id
+            author
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onUpdateComment = /* GraphQL */ `
+  subscription OnUpdateComment {
+    onUpdateComment {
+      id
+      author
+      content
+      createdAt
+      updatedAt
+      photo {
+        id
+        file {
+          bucket
+          key
+          region
+        }
+        exif
+        owner
+        createdAt
+        updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+          photos {
+            nextToken
+          }
+        }
+        comments {
+          items {
+            id
+            author
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onDeleteComment = /* GraphQL */ `
+  subscription OnDeleteComment {
+    onDeleteComment {
+      id
+      author
+      content
+      createdAt
+      updatedAt
+      photo {
+        id
+        file {
+          bucket
+          key
+          region
+        }
+        exif
+        owner
+        createdAt
+        updatedAt
+        album {
+          id
+          name
+          siteId
+          owner
+          createdAt
+          updatedAt
+          photos {
+            nextToken
+          }
+        }
+        comments {
+          items {
+            id
+            author
+            content
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+      }
+    }
+  }
 `;
