@@ -1,26 +1,54 @@
 # Amplify Demo (amplify-demo-awsug)
 
-An Amplify Demo App
+App built for the Singapore AWS User Group presentation on 16th June 2020.
 
-## Install the dependencies
+## Before you start
+* AWS CLI
+* At least 1 profile configured in AWS CLI
+* nodejs 12
+* Quasar CLI: `npm -g @quasar/cli`
+* Amplify CLI: `npm -g @aws-amplify/cli`
+* Amplify configured: `amplify configure`
+
+## Bootstrap the app
 ```bash
-npm install
+git clone https://github.com/DanielMuller/amplify-demo-awsug.git
+cd amplify-demo-awsug
+npm ci
+amplify init
+# Choose a name for the environment
+# Editor: choose yours
+# Do you want to use an AWs Profile? Yes
+# Please choose the profile you want to use: default
+# Do you want to configure Lambda Triggers for Cognito? n
+amplify status
 ```
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+## Deploy the infra
 ```bash
-quasar dev
+amplify push
 ```
+Since there is no _hosting_ defined, this will only deploy the infra.
 
-### Lint the files
+Either you add hosting with `s3 add hosting`, or you publish the code to a repo and connect it to `Amplify Console`.
+
+## Open the console
 ```bash
-npm run lint
+amplify console
 ```
+Connect your repo to your project.
 
-### Build the app for production
+### Rewrite and Redirect
+* Source address: `</^[^.]+$|\.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)/>`
+* Target address: `/index.html`
+* Type: `200 (Rewrite)`
+
+## Tell Amplify to build
+
+## Open the URL
+In the general tab, open the application URL and start playing.
+
+## Delete your stack
 ```bash
-quasar build
+amplify delete
 ```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
